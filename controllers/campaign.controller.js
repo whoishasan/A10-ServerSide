@@ -60,6 +60,22 @@ const getCampaign = async (req, res) => {
   }
 };
 
+const getCampaignForHome = async (req, res) => {
+  const { limit } = req.query;
+
+  try {
+    const currentDate = new Date();
+    const camps = await Campaign.find({ deadline: { $gte: currentDate } })
+      .sort({ createdAt: -1, deadline: -1 })
+      .limit(Number(limit));
+
+    res.send(camps);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Failed to fetch campaigns." });
+  }
+};
+
 const myCampaigns = async (req, res) => {
   const { ownerUID } = req.query;
 
