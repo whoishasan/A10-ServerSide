@@ -1,6 +1,20 @@
 import mongoose from "mongoose";
 
-const myDonationSchema = new mongoose.Schema();
+const myDonationSchema = new mongoose.Schema({
+  ownerUid: {
+    type: String,
+    required: true,
+  },
+  ammount: {
+    type: Number,
+    required: true,
+  },
+  campaign: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "campaigns",
+    required: true,
+  },
+});
 
 const myDonation = mongoose.model("Donations", myDonationSchema);
 
