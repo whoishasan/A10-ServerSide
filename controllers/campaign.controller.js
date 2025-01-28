@@ -39,6 +39,27 @@ const addCampaign = async (req, res) => {
   }
 };
 
+const getCampaign = async (req, res) => {
+  const { campId } = req.query;
+
+  try {
+    const camp = await Campaign.findById(`${campId}`);
+    if (camp?._id) {
+      res.status(200).send(camp);
+    } else {
+      res.status(401).send({
+        code: 404,
+        msg: "Something Went Wrong Campaign Not Found",
+      });
+    }
+  } catch (err) {
+    res.status(401).send({
+      code: 404,
+      msg: "Something Went Wrong Campaign Not Found",
+    });
+  }
+};
+
 const myCampaigns = async (req, res) => {
   const { ownerUID } = req.query;
 
