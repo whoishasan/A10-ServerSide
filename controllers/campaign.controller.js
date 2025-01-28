@@ -76,6 +76,23 @@ const getCampaignForHome = async (req, res) => {
   }
 };
 
+const addDonations = async (req, res) => {
+  const { CampId, OwnerUID, Ammount } = req.body;
+  try {
+    const donation = myDonation({
+      campaign: CampId,
+      ownerUid: OwnerUID,
+      ammount: Ammount,
+    });
+
+    const addDonation = await donation.save();
+    console.log(addDonation);
+    res.status(200).send(addDonation);
+  } catch (err) {
+    res.send(err);
+  }
+};
+
 const myCampaigns = async (req, res) => {
   const { ownerUID } = req.query;
 
